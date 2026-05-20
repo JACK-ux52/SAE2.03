@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}{{bouton}} un équipement{% endblock %}
+{% block content %}
+    <h1>Gestion des Equipements</h1>
+
+    <form action="{{action}}" method="post">
+        <input type="text" name="nom" value="{{ equipement.nom if equipement else '' }}" placeholder="Nom de l'équipement" required />
+        <select name="type_equipement" required>
+            <option value="">-- Choisir un type d'équipement --</option>
+            <option value="Switch" {% if equipement and equipement.type_equipement == 'Switch' %}selected{% endif %}>Switch/Commutateur</option>
+            <option value="Routeur" {% if equipement and equipement.type_equipement == 'Routeur' %}selected{% endif %}>Routeur</option>
+            <option value="PC" {% if equipement and equipement.type_equipement == 'PC' %}selected{% endif %}>PC</option>
+            <option value="Imprimantes" {% if equipement and equipement.type_equipement == 'Imprimantes' %}selected{% endif %}>Imprimantes</option>
+            <option value="Téléphones" {% if equipement and equipement.type_equipement == 'Téléphones' %}selected{% endif %}>Téléphones</option>
+        </select>
+        <select name="marque" required>
+            <option value="">-- Choisir une marque --</option>
+            <option value="Cisco" {% if equipement and equipement.marque == 'Cisco' %}selected{% endif %}>Cisco</option>
+            <option value="Stormshield" {% if equipement and equipement.marque == 'Stormshield' %}selected{% endif %}>Stormshield</option>
+            <option value="HP" {% if equipement and equipement.marque == 'HP' %}selected{% endif %}>HP</option>
+            <option value="Fanvill" {% if equipement and equipement.marque == 'Fanvill' %}selected{% endif %}>Fanvill</option>
+        </select>
+        <input type="text" name="adresse_ip" value="{{ equipement.adresse_ip if equipement else '' }}" placeholder="adresse_ip de l'équipement" />
+        <select name="localisation" required>
+            <option value="">-- localisation de l'équipement --</option>
+            <option value="H0-05" {% if equipement and equipement.localisation == 'H0-05' %}selected{% endif %}>H0-05</option>
+            <option value="H1-11" {% if equipement and equipement.localisation == 'H1-11' %}selected{% endif %}>H1-11</option>
+            <option value="J0-01" {% if equipement and equipement.localisation == 'J0-01' %}selected{% endif %}>J0-01</option>
+            <option value="J0-09" {% if equipement and equipement.localisation == 'J0-09' %}selected{% endif %}>J0-09</option>
+            <option value="J0-04" {% if equipement and equipement.localisation == 'J0-04' %}selected{% endif %}>J0-04</option>
+            <option value="I0-02" {% if equipement and equipement.localisation == 'I0-02' %}selected{% endif %}>I0-02</option>
+            <option value="Réserve" {% if equipement and equipement.localisation == 'Réserve' %}selected{% endif %}>Réserve</option>
+        </select>
+        <select name="statut" required>
+            <option value="">-- Statut de l'équipement --</option>
+            <option value="En marche" {% if equipement and equipement.statut == 'En marche' %}selected{% endif %}>En marche</option>
+            <option value="A l'arrêt" {% if equipement and equipement.statut == 'A l"arrêt' %}selected{% endif %}>A l'arrêt</option>
+        </select>
+        <button type="submit">{{bouton}}</button>
+    </form>
+    <a href="{{ url_for('inventaire') }}"><button type="button" class="btn btn-secondary">Voir l'inventaire</button></a>
+    <a href="{{ url_for('accueil') }}"><button type="button" class="btn btn-secondary">Retourner à l'accueil</button></a>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+        <h2>Connexion</h2>
+        <form method="POST" action="/login">
+            Nom : <input type="text" name="nom" required/> <br>
+            Mot de passe : <input type="password" name="password" required/> <br>
+            <button type="submit">Se connecter</button>
+        </form>
+        <a href="{{ url_for('nouvel_utilisateur') }}">Pas encore inscrit ?</a>
+{% endblock %}

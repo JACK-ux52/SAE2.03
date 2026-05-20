@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if equipements %}
+        <form action="" method="get">
+            <select name="filtre_type_equipement">
+                <option value="">-- Choisir un type d'équipement --</option>
+                <option value="Switch" {% if filtre_type_equipement == 'Switch' %}selected{% endif %}>Switch/Commutateur</option>
+                <option value="Routeur" {% if filtre_type_equipement == 'Routeur' %}selected{% endif %}>Routeur</option>
+                <option value="PC" {% if filtre_type_equipement == 'PC' %}selected{% endif %}>PC</option>
+                <option value="Imprimantes" {% if filtre_type_equipement == 'Imprimantes' %}selected{% endif %}>Imprimantes</option>
+                <option value="Téléphones" {% if filtre_type_equipement == 'Téléphones' %}selected{% endif %}>Téléphones</option>
+            </select>
+             <select name="filtre_marque">
+                 <option value="">-- Choisir une marque --</option>
+                 <option value="Cisco" {% if filtre_marque == 'Cisco' %}selected{% endif %}>Cisco</option>
+                 <option value="Stormshield" {% if filtre_marque == 'Stormshield' %}selected{% endif %}>Stormshield</option>
+                 <option value="HP" {% if filtre_marque == 'HP' %}selected{% endif %}>HP</option>
+                 <option value="Fanvill" {% if filtre_marque == 'Fanvill' %}selected{% endif %}>Fanvill</option>
+             </select>
+             <select name="filtre_localisation">
+                <option value="">-- localisation de l'équipement --</option>
+                <option value="H0-05" {% if filtre_localisation == 'H0-05' %}selected{% endif %}>H0-05</option>
+                <option value="H1-11" {% if filtre_localisation == 'H1-11' %}selected{% endif %}>H1-11</option>
+                <option value="J0-01" {% if filtre_localisation == 'J0-01' %}selected{% endif %}>J0-01</option>
+                <option value="J0-09" {% if filtre_localisation == 'J0-09' %}selected{% endif %}>J0-09</option>
+                <option value="J0-04" {% if filtre_localisation == 'J0-04' %}selected{% endif %}>J0-04</option>
+                <option value="I0-02" {% if filtre_localisation == 'I0-02' %}selected{% endif %}>I0-02</option>
+                <option value="Réserve" {% if filtre_localisation == 'Réserve' %}selected{% endif %}>Réserve</option>
+             </select>
+             <select name="filtre_statut">
+                <option value="">-- Statut de l'équipement --</option>
+                <option value="En marche" {% if filtre_statut == 'En marche' %}selected{% endif %}>En marche</option>
+                <option value="A l'arrêt" {% if filtre_statut == 'A l"arrêt' %}selected{% endif %}>A l'arrêt</option>
+             </select>
+             <button type="submit" class="btn btn-secondary">Filtrer</button>
+             <a href="{{ url_for('inventaire') }}"><button type="button" class="btn btn-secondary">Réinitialiser</button></a>
+        </form>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>nom</th>
+                    <th>type_equipement</th>
+                    <th>marque</th>
+                    <th>adresse_ip</th>
+                    <th>localisation</th>
+                    <th>statut</th>
+                    {% if session.get("est_admin") %}
+                    <th>Actions</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for equipement in equipements %}
+                <tr>
+                    <td>{{ equipement.nom }}</td>
+                    <td>{{ equipement.type_equipement }}</td>
+                    <td>{{ equipement.marque }}</td>
+                    <td>{{ equipement.adresse_ip }}</td>
+                    <td>{{ equipement.localisation }}</td>
+                    <td>{{ equipement.statut }}</td>
+                    {% if session.get("est_admin") %}
+                    <td><a href="{{ url_for('modifier', id=equipement.id) }}" class="modifier" onclick="return confirm('Modifier cette compétence ?')">Modifier</a> <form action="{{ url_for('supprimer', id=equipement.id) }}" method="post">
+                        <button type="submit" onclick="return confirm('Supprimer cette compétence ?')" class="btn btn-danger">Supprimer</button>
+                    </form></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun Equipement ajouté.</p>
+    {% endif %}
+    <a href="{{ url_for('accueil') }}"><button type="button" class="btn btn-secondary">Retourner à l'accueil</button></a>
+    {% if session.get("est_admin") %}
+    <a href="{{ url_for('ajouter') }}"><button type="button" class="btn btn-primary">Ajouter un Equipement</button></a>
+    {% endif %}
+{% endblock %}

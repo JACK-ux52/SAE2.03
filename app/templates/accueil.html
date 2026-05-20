@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<p>Bienvenue sur la page Accueil <strong>{{ nom }}</strong>.</p>
+<p>Ici tu peux consulter les informations générales de l'inventaire.</p>
+<p>Nombre total de machines : {{nbr_total}}</p>
+<h2>Statut</h2>
+<p>Nombre de machines en marche : {{nbr_en_marche}}</p>
+<p>Nombre de machines à l'arrêt : {{nbr_a_arret}}</p>
+<h2>Type d'Equipement</h2>
+<p>Nombre de Switch :  {{nbr_switch}}</p>
+<p>Nombre de Routeur : {{nbr_routeur}}</p>
+<p>Nombre de PC : {{nbr_PC}}</p>
+<p>Nombre d'Imprimante : {{nbr_imprimante}}</p>
+<p >Nombre de Téléphones : {{nbr_telephone}} </p>
+<a href="{{ url_for('inventaire') }}"><button type="button" class="btn btn-secondary">Voir l'inventaire pour plus d'informations</button></a>
+{% if session.get("est_admin") %}
+<br>
+<a href="{{ url_for('ajouter') }}"><button type="button" class="btn btn-primary">Ajouter un équipement</button></a>
+{% endif %}
+{% endblock %}

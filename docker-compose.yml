@@ -1,0 +1,41 @@
+services: 
+
+  db: 
+    image: postgres:14
+    container_name: postgresql
+    environment: 
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: mabase
+    networks:
+      - mon_reseau
+
+  web:
+    depends_on:
+      - db
+    build:
+      context: .
+    container_name: Flask
+    ports:
+      - "5000:5000"
+    networks: 
+      - mon_reseau
+    environment: 
+      DATABASE_URL: postgresql://admin:admin123@db:5432/mabase
+
+#on utilise pgadmin avec postgresql comme phpmyadmin pour MYSQL
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8080:80"
+    networks:
+      - mon_reseau
+
+#networks au même niveau que services et mon_réseau au même niveau que db et web (très important)
+networks: 
+  mon_reseau:
+      driver: bridge
