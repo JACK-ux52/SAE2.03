@@ -118,7 +118,7 @@ def login():
             session["est_admin"] = utilisateur_saisi.est_admin
             # Succès : Le hash correspond au mot de passe en clair
             flash(f"Bienvenue, {nom_saisi} !", "success")
-            return redirect(url_for("accueil"))
+            return redirect(url_for("index"))
         else:
             # Échec : Utilisateur inconnu ou mauvais mot de passe
             flash("Échec de la connexion", "danger")
@@ -128,8 +128,8 @@ def login():
     return render_template("connexion.html")
 
 
-@app.route("/accueil")
-def accueil():
+@app.route("/index")
+def index():
     # 1. Vérification de la session
     if "utilisateur_id" not in session:
         return redirect(url_for("login"))
@@ -195,7 +195,7 @@ def accueil():
 
         # 3. Envoi au template
         return render_template(
-            "accueil.html",
+            "index.html",
             nom=session.get("nom"),
             nbr_total=nbr_total,
             nbr_en_marche=nbr_en_marche,
@@ -287,7 +287,7 @@ def ajouter():
                     flash(f"Erreur lors de l'enregistrement : {e}", "danger")
                     return render_template("ajouter.html")
         else:
-            return redirect(url_for("accueil"))
+            return redirect(url_for("index"))
 
 
 @app.route("/admin/modifier/<int:id>", methods=["get", "post"])
@@ -301,7 +301,7 @@ def modifier(id):
                 flash(
                     f"Erreur : L'équipement ID {id} est introuvable.", "danger"
                 )
-                return redirect(url_for("accueil"))
+                return redirect(url_for("index"))
             else:
                 if request.method == "GET":
                     return render_template(
@@ -355,7 +355,7 @@ def supprimer(id):
                     f"Erreur : L'équipement ID {id} est introuvable.",
                     "danger",
                 )
-                return redirect(url_for("accueil"))
+                return redirect(url_for("index"))
             else:
                 historique = Historique(
                     utilisateur_id=session["utilisateur_id"],
@@ -448,7 +448,7 @@ def historique():
             )
             return render_template("historique.html", pagination=pagination)
         else:
-            return redirect(url_for("accueil"))
+            return redirect(url_for("index"))
 
 
 if __name__ == "__main__":
