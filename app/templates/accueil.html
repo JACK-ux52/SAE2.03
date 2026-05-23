@@ -1,20 +1,99 @@
 {% extends "base.html" %}
+{% block title %}Accueil - SAE23{% endblock %}
 {% block content %}
-<p>Bienvenue sur la page Accueil <strong>{{ nom }}</strong>.</p>
-<p>Ici tu peux consulter les informations générales de l'inventaire.</p>
-<p>Nombre total de machines : {{nbr_total}}</p>
-<h2>Statut</h2>
-<p>Nombre de machines en marche : {{nbr_en_marche}}</p>
-<p>Nombre de machines à l'arrêt : {{nbr_a_arret}}</p>
-<h2>Type d'Equipement</h2>
-<p>Nombre de Switch :  {{nbr_switch}}</p>
-<p>Nombre de Routeur : {{nbr_routeur}}</p>
-<p>Nombre de PC : {{nbr_PC}}</p>
-<p>Nombre d'Imprimante : {{nbr_imprimante}}</p>
-<p >Nombre de Téléphones : {{nbr_telephone}} </p>
-<a href="{{ url_for('inventaire') }}"><button type="button" class="btn btn-secondary">Voir l'inventaire pour plus d'informations</button></a>
-{% if session.get("est_admin") %}
-<br>
-<a href="{{ url_for('ajouter') }}"><button type="button" class="btn btn-primary">Ajouter un équipement</button></a>
-{% endif %}
+<div class="glass-card mb-4">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h1 style="background: linear-gradient(to right, #3b82f6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; margin-bottom: 0.5rem;">
+                Tableau de Bord
+            </h1>
+            <p class="text-white mb-0 font-weight-bold">Bienvenue sur votre gestionnaire de parc réseau, <strong>{{ nom }}</strong></p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <a href="{{ url_for('inventaire') }}" class="btn btn-premium px-4 py-2 me-2">
+                📂 Voir l'inventaire
+            </a>
+            {% if session.get("est_admin") %}
+            <a href="{{ url_for('ajouter') }}" class="btn btn-premium-secondary px-4 py-2">
+                ➕ Ajouter
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <!-- Total Card -->
+    <div class="col-md-4">
+        <div class="glass-card text-center h-100 d-flex flex-column justify-content-center" style="border-left: 4px solid var(--primary);">
+            <span class="text-white small uppercase tracking-wider">Total Equipements</span>
+            <h2 class="display-4 font-weight-bold my-2" style="color: #fff;">{{ nbr_total }}</h2>
+            <span class="text-info small">Machines enregistrées</span>
+        </div>
+    </div>
+
+    <!-- En marche Card -->
+    <div class="col-md-4">
+        <div class="glass-card text-center h-100 d-flex flex-column justify-content-center" style="border-left: 4px solid var(--accent-emerald);">
+            <span class="text-white small uppercase tracking-wider">En Marche</span>
+            <h2 class="display-4 font-weight-bold my-2 text-success">{{ nbr_en_marche }}</h2>
+            <span class="badge badge-custom badge-marche align-self-center">Actifs</span>
+        </div>
+    </div>
+
+    <!-- A l'arrêt Card -->
+    <div class="col-md-4">
+        <div class="glass-card text-center h-100 d-flex flex-column justify-content-center" style="border-left: 4px solid var(--accent-rose);">
+            <span class="text-white small uppercase tracking-wider">À l'arrêt</span>
+            <h2 class="display-4 font-weight-bold my-2 text-danger">{{ nbr_a_arret }}</h2>
+            <span class="badge badge-custom badge-arret align-self-center">Inactifs</span>
+        </div>
+    </div>
+</div>
+
+<div class="glass-card">
+    <h3 class="mb-4" style="font-weight: 600; color: #fff;">Répartition par Type de Matériel</h3>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+        <!-- Switch -->
+        <div class="col">
+            <div class="card bg-dark border-secondary h-100 text-center p-3" style="background-color: rgba(255,255,255,0.02) !important; border: 1px solid var(--border-color); border-radius: 14px; transition: all 0.3s ease;">
+                <div class="fs-1 mb-2">🔌</div>
+                <div class="fs-3 font-weight-bold text-white">{{ nbr_switch }}</div>
+                <div class="text-white small mt-1 font-weight-bold">Switchs</div>
+            </div>
+        </div>
+        <!-- Routeur -->
+        <div class="col">
+            <div class="card bg-dark border-secondary h-100 text-center p-3" style="background-color: rgba(255,255,255,0.02) !important; border: 1px solid var(--border-color); border-radius: 14px; transition: all 0.3s ease;">
+                <div class="fs-1 mb-2">📶</div>
+                <div class="fs-3 font-weight-bold text-white">{{ nbr_routeur }}</div>
+                <div class="text-white small mt-1 font-weight-bold">Routeurs</div>
+            </div>
+        </div>
+        <!-- PC -->
+        <div class="col">
+            <div class="card bg-dark border-secondary h-100 text-center p-3" style="background-color: rgba(255,255,255,0.02) !important; border: 1px solid var(--border-color); border-radius: 14px; transition: all 0.3s ease;">
+                <div class="fs-1 mb-2">💻</div>
+                <div class="fs-3 font-weight-bold text-white">{{ nbr_PC }}</div>
+                <div class="text-white small mt-1 font-weight-bold">Ordinateurs</div>
+            </div>
+        </div>
+        <!-- Imprimante -->
+        <div class="col">
+            <div class="card bg-dark border-secondary h-100 text-center p-3" style="background-color: rgba(255,255,255,0.02) !important; border: 1px solid var(--border-color); border-radius: 14px; transition: all 0.3s ease;">
+                <div class="fs-1 mb-2">🖨️</div>
+                <div class="fs-3 font-weight-bold text-white">{{ nbr_imprimante }}</div>
+                <div class="text-white small mt-1 font-weight-bold">Imprimantes</div>
+            </div>
+        </div>
+        <!-- Téléphone -->
+        <div class="col">
+            <div class="card bg-dark border-secondary h-100 text-center p-3" style="background-color: rgba(255,255,255,0.02) !important; border: 1px solid var(--border-color); border-radius: 14px; transition: all 0.3s ease;">
+                <div class="fs-1 mb-2">☎️</div>
+                <div class="fs-3 font-weight-bold text-white">{{ nbr_telephone }}</div>
+                <div class="text-white small mt-1 font-weight-bold">Téléphones</div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

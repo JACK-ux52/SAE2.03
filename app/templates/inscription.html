@@ -1,11 +1,29 @@
 {% extends "base.html" %}
+{% block title %}Inscription - SAE23{% endblock %}
 {% block content %}
-        <h2>Inscription</h2>
-        <form method="POST" action="/nouvel_utilisateur">
-            Nom : <input type="text" name="nom" required/> <br>
-            Email : <input type="email" name="email" required/> <br>
-            Mot de passe : <input type="password" name="password" required/> <br>
-            <button type="submit">Créer mon compte</button>
-        </form>
-        <a href="{{ url_for('connexion') }}">Déjà inscrit ?</a>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="glass-card">
+            <h2 class="text-center mb-4" style="background: linear-gradient(to right, #3b82f6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">Créer un compte</h2>
+            <form method="POST" action="/nouvel_utilisateur">
+                <div class="mb-3">
+                    <label for="nom" class="form-label">Nom d'utilisateur</label>
+                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Ex: Jean Dupont" required/>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Adresse Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Ex: jean.dupont@iut.fr" required/>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Mot de passe sécurisé" required/>
+                </div>
+                <button type="submit" class="btn btn-premium w-100 mb-3">Créer mon compte</button>
+            </form>
+            <div class="text-center mt-3">
+                <a href="{{ url_for('connexion') }}" class="text-info text-decoration-none small">Déjà inscrit ? Se connecter</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

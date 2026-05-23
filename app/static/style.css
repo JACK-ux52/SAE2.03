@@ -1,0 +1,253 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-main: #090d16;
+    --bg-card: rgba(17, 24, 39, 0.7);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-hover: rgba(59, 130, 246, 0.4);
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --primary: #3b82f6;
+    --primary-glow: rgba(59, 130, 246, 0.25);
+    --accent-cyan: #06b6d4;
+    --accent-emerald: #10b981;
+    --accent-rose: #f43f5e;
+    --accent-purple: #8b5cf6;
+    --glass-blur: blur(12px);
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    background-image: 
+        radial-gradient(at 10% 20%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 90% 80%, rgba(139, 92, 246, 0.15) 0px, transparent 50%);
+    background-attachment: fixed;
+    padding-bottom: 3rem;
+}
+
+/* Base navbar */
+.navbar {
+    background: rgba(17, 24, 39, 0.6);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+    border-radius: 16px;
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #fff !important;
+    letter-spacing: -0.5px;
+    background: linear-gradient(to right, #3b82f6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: var(--bg-card);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 10px 40px 0 rgba(59, 130, 246, 0.15);
+    transform: translateY(-4px);
+}
+
+/* Forms & Inputs styling */
+.form-label {
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+    background-color: rgba(9, 13, 22, 0.6) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.form-control::placeholder {
+    color: rgba(156, 163, 175, 0.4);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 4px var(--primary-glow) !important;
+    outline: none;
+}
+
+/* Custom premium buttons */
+.btn-premium {
+    background: linear-gradient(135deg, var(--primary), var(--accent-cyan));
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.btn-premium:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+    background: linear-gradient(135deg, #2563eb, #0891b2);
+    color: white;
+}
+
+.btn-premium-danger {
+    background: linear-gradient(135deg, var(--accent-rose), #be123c);
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
+}
+
+.btn-premium-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(244, 63, 94, 0.5);
+    background: linear-gradient(135deg, #e11d48, #9f1239);
+    color: white;
+}
+
+.btn-premium-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.2s ease;
+}
+
+.btn-premium-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Tables styling */
+.table {
+    color: var(--text-main) !important;
+    vertical-align: middle;
+}
+
+.table th {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border-color);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    padding: 1rem;
+}
+
+.table td {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.015) !important;
+}
+
+.table-striped tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Custom badges */
+.badge-custom {
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.badge-marche {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--accent-emerald);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-arret {
+    background-color: rgba(244, 63, 94, 0.15);
+    color: var(--accent-rose);
+    border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+.badge-loc {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Pagination custom */
+.pagination .page-item .page-link {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: rgba(59, 130, 246, 0.2);
+    border-color: var(--primary);
+    color: white;
+}
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, var(--primary), var(--accent-cyan));
+    border-color: transparent;
+    color: white;
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: rgba(17, 24, 39, 0.3);
+    border-color: var(--border-color);
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+/* Animations classes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* Custom styles for repartition cards */
+.row-cols-md-5 .card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.row-cols-md-5 .card:hover {
+    border-color: var(--border-hover) !important;
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.15) !important;
+    transform: translateY(-4px);
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block title %}Historique des Actions - SAE23{% endblock %}
+{% block content %}
+<div class="glass-card mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2 style="background: linear-gradient(to right, #3b82f6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; margin-bottom: 0.2rem;">
+                Historique des Actions
+            </h2>
+            <p class="text-white mb-0 font-weight-bold">Journal d'audit des modifications du parc réseau</p>
+        </div>
+    </div>
+</div>
+
+<div class="glass-card p-0 overflow-hidden mb-4">
+    {% if pagination.items %}
+    <div class="table-responsive">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>Utilisateur</th>
+                    <th>Équipement</th>
+                    <th>Action</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for historique in pagination.items %}
+                <tr>
+                    <td>
+                        <span class="badge bg-light text-dark px-2 py-1 fs-6 fw-bold shadow-sm" style="color: #000 !important;">👤 {{ historique.utilisateur.nom }}</span>
+                    </td>
+                    <td>
+                        {% if historique.equipement %}
+                        🖥️ {{ historique.equipement.nom }}
+                        {% else %}
+                        <span class="text-muted italic">🗑️ Équipement supprimé</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if historique.action == 'Ajout' %}
+                        <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded">➕ Ajout</span>
+                        {% elif historique.action == 'Modification' %}
+                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-1 rounded">📝 Modification</span>
+                        {% else %}
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-1 rounded">❌ Suppression</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-muted">{{ historique.date.strftime('%d/%m/%Y %H:%M:%S') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="p-5 text-center text-muted">
+        <p class="fs-4 mb-0">Aucun historique d'activité disponible.</p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Pagination -->
+{% if pagination.pages > 1 %}
+<nav aria-label="Navigation de page" class="mb-4">
+    <ul class="pagination justify-content-center">
+        <!-- Précédent -->
+        {% if pagination.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('historique', page=pagination.prev_num) }}" aria-label="Précédent">
+                <span aria-hidden="true">&laquo; Précédent</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">&laquo; Précédent</span>
+        </li>
+        {% endif %}
+
+        <!-- Numéros de pages -->
+        {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if page_num %}
+                {% if page_num == pagination.page %}
+                <li class="page-item active"><span class="page-link">{{ page_num }}</span></li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('historique', page=page_num) }}">{{ page_num }}</a>
+                </li>
+                {% endif %}
+            {% else %}
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Suivant -->
+        {% if pagination.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('historique', page=pagination.next_num) }}" aria-label="Suivant">
+                <span aria-hidden="true">Suivant &raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">Suivant &raquo;</span>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+<div class="d-flex gap-2 justify-content-center">
+    <a href="{{ url_for('accueil') }}" class="btn btn-premium-secondary px-4">
+        🏠 Retourner à l'accueil
+    </a>
+    <a href="{{ url_for('inventaire') }}" class="btn btn-premium px-4">
+        📂 Voir l'inventaire
+    </a>
+</div>
+{% endblock %}

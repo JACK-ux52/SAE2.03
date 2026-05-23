@@ -22,6 +22,7 @@ services:
       - mon_reseau
     environment: 
       DATABASE_URL: postgresql://admin:admin123@db:5432/mabase
+      TZ: Europe/Paris
 
 #on utilise pgadmin avec postgresql comme phpmyadmin pour MYSQL
   pgadmin:

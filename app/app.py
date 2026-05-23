@@ -8,8 +8,11 @@ from flask import (
     flash,
 )
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import ForeignKey
+from datetime import datetime
+from typing import Optional
 import os
 
 
@@ -40,6 +43,19 @@ class Utilisateur(db.Model):
     email: Mapped[str] = mapped_column(nullable=False, unique=True)
     mot_de_passe: Mapped[str] = mapped_column(nullable=False)
     est_admin: Mapped[bool] = mapped_column(default=False)
+
+
+class Historique(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    utilisateur_id: Mapped[int] = mapped_column(ForeignKey("utilisateur.id"))
+    equipement_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("equipement.id", ondelete="SET NULL"), nullable=True
+    )
+    action: Mapped[str] = mapped_column(nullable=False)
+    date: Mapped[datetime] = mapped_column(default=datetime.now)
+
+    utilisateur: Mapped["Utilisateur"] = relationship("Utilisateur")
+    equipement: Mapped[Optional["Equipement"]] = relationship("Equipement")
 
 
 with app.app_context():
@@ -101,8 +117,7 @@ def login():
             session["nom"] = utilisateur_saisi.nom
             session["est_admin"] = utilisateur_saisi.est_admin
             # Succès : Le hash correspond au mot de passe en clair
-            flash(f"Connexion réussie pour {nom_saisi}", "success"),
-            flash(f"Session créée pour l'ID {utilisateur_saisi.id}", "success")
+            flash(f"Bienvenue, {nom_saisi} !", "success")
             return redirect(url_for("accueil"))
         else:
             # Échec : Utilisateur inconnu ou mauvais mot de passe
@@ -218,11 +233,16 @@ def inventaire():
         requete = requete.filter_by(localisation=filtre_localisation)
     if filtre_statut:
         requete = requete.filter_by(statut=filtre_statut)
-    equipements = db.session.execute(requete).scalars().all()
+
+    # Tri stable par ID pour la pagination
+    requete = requete.order_by(Equipement.id)
+
+    page = request.args.get("page", 1, type=int)
+    pagination = db.paginate(requete, page=page, per_page=5, error_out=False)
 
     return render_template(
         "inventaire.html",
-        equipements=equipements,
+        pagination=pagination,
         filtre_type_equipement=filtre_type_equipement,
         filtre_marque=filtre_marque,
         filtre_localisation=filtre_localisation,
@@ -252,6 +272,13 @@ def ajouter():
                 )
                 db.session.add(nouvel_equipement)
                 try:
+                    db.session.commit()
+                    historique = Historique(
+                        utilisateur_id=session["utilisateur_id"],
+                        equipement_id=nouvel_equipement.id,
+                        action="Ajout",
+                    )
+                    db.session.add(historique)
                     db.session.commit()
                     print("Equipement enregistré avec succès !")
                     return redirect(url_for("inventaire"))
@@ -298,6 +325,13 @@ def modifier(id):
                     equipement_a_modifier.statut = request.form.get("statut")
                     try:
                         db.session.commit()
+                        historique = Historique(
+                            utilisateur_id=session["utilisateur_id"],
+                            equipement_id=equipement_a_modifier.id,
+                            action="Modification",
+                        )
+                        db.session.add(historique)
+                        db.session.commit()
                         print("Equipement modifié avec succès !")
                         return redirect(url_for("inventaire"))
                     except Exception as e:
@@ -323,6 +357,13 @@ def supprimer(id):
                 )
                 return redirect(url_for("accueil"))
             else:
+                historique = Historique(
+                    utilisateur_id=session["utilisateur_id"],
+                    equipement_id=equipement_a_supprimer.id,
+                    action="Suppression",
+                )
+                db.session.add(historique)
+                db.session.commit()
                 db.session.delete(equipement_a_supprimer)
                 db.session.commit()
                 return redirect(url_for("inventaire"))
@@ -392,6 +433,22 @@ def carte():
             nbr_en_I0_02=nbr_en_I0_02,
             nbr_en_Reserve=nbr_en_Reserve,
         )
+
+
+@app.route("/historique")
+def historique():
+    if "utilisateur_id" not in session:
+        return redirect(url_for("login"))
+    else:
+        if session["est_admin"] is True:
+            requete = db.select(Historique).order_by(Historique.date.desc())
+            page = request.args.get("page", 1, type=int)
+            pagination = db.paginate(
+                requete, page=page, per_page=5, error_out=False
+            )
+            return render_template("historique.html", pagination=pagination)
+        else:
+            return redirect(url_for("accueil"))
 
 
 if __name__ == "__main__":

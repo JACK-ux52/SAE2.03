@@ -1,100 +1,102 @@
 {% extends "base.html" %}
+{% block title %}Cartographie du Parc - SAE23{% endblock %}
 {% block content %}
-<div class="container mt-4">
-    <h2 class="text-center mb-5">Cartographie du Parc Réseau (IUT de Béthune)</h2>
-    
-    <div class="row">
-        <!-- Bâtiment H -->
-        <div class="col-md-4">
-            <h3 class="text-primary text-center">Bâtiment H</h3>
-            <!-- Tes cartes ici -->
-            <div class="card mb-3 shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Salle H0-05</h5>
-                    <p class="card-text">
-                        <span class="badge bg-info text-dark">{{ nbr_en_H0_05 }} équipements</span>
-                    </p>
-                    <!-- Le lien qui filtre l'inventaire -->
-                     <a href="{{ url_for('inventaire', filtre_localisation='H0-05') }}" class="stretched-link"></a>
-                </div>
-            </div>
-            <div class="card mb-3 shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Salle H1-11</h5>
-                    <p class="card-text">
-                        <span class="badge bg-info text-dark">{{ nbr_en_H1_11 }} équipements</span>
-                    </p>
-                    <!-- Le lien qui filtre l'inventaire -->
-                     <a href="{{ url_for('inventaire', filtre_localisation='H1-11') }}" class="stretched-link"></a>
-                </div>
-            </div>
-        </div>
+<div class="glass-card mb-4">
+    <h2 class="text-center mb-2" style="background: linear-gradient(to right, #3b82f6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">
+        Cartographie du Parc Réseau
+    </h2>
+    <p class="text-white mt-1 font-weight-bold">Visualisation géographique des équipements par bâtiment (IUT de Béthune)</p>
+</div>
 
-        <!-- Bâtiment I -->
-        <div class="col-md-4">
-            <h3 class="text-success text-center">Bâtiment I</h3>
-            <!-- Tes cartes ici -->
-             <div class="card mb-3 shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Salle I0-02</h5>
-                    <p class="card-text">
-                        <span class="badge bg-info text-dark">{{ nbr_en_I0_02 }} équipements</span>
-                    </p>
-                    <!-- Le lien qui filtre l'inventaire -->
-                     <a href="{{ url_for('inventaire', filtre_localisation='I0-02') }}" class="stretched-link"></a>
-                </div>
+<div class="row g-4">
+    <!-- Bâtiment H -->
+    <div class="col-md-4">
+        <div class="glass-card h-100">
+            <h3 class="text-primary text-center mb-4" style="font-weight: 600;">🏫 Bâtiment H</h3>
+            
+            <div class="glass-card mb-3 p-3 position-relative text-center">
+                <h5 class="text-white">Salle H0-05</h5>
+                <p class="mb-0 mt-2">
+                    <span class="badge badge-custom badge-loc">{{ nbr_en_H0_05 }} équipements</span>
+                </p>
+                <a href="{{ url_for('inventaire', filtre_localisation='H0-05') }}" class="stretched-link"></a>
             </div>
-        </div>
 
-        <!-- Bâtiment J -->
-        <div class="col-md-4">
-            <h3 class="text-warning text-center">Bâtiment J</h3>
-            <!-- Tes cartes ici -->
-            <div class="card mb-3 shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Salle J0-01</h5>
-                    <p class="card-text">
-                        <span class="badge bg-info text-dark">{{ nbr_en_J0_01 }} équipements</span>
-                    </p>
-                    <!-- Le lien qui filtre l'inventaire -->
-                     <a href="{{ url_for('inventaire', filtre_localisation='J0-01') }}" class="stretched-link"></a>
-                </div>
-            </div>
-            <div class="card mb-3 shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Salle J0-04</h5>
-                    <p class="card-text">
-                        <span class="badge bg-info text-dark">{{ nbr_en_J0_04 }} équipements</span>
-                    </p>
-                    <!-- Le lien qui filtre l'inventaire -->
-                     <a href="{{ url_for('inventaire', filtre_localisation='J0-04') }}" class="stretched-link"></a>
-                </div>
-            </div>
-            <div class="card mb-3 shadow-sm">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Salle J0-09</h5>
-                    <p class="card-text">
-                        <span class="badge bg-info text-dark">{{ nbr_en_J0_09 }} équipements</span>
-                    </p>
-                    <!-- Le lien qui filtre l'inventaire -->
-                     <a href="{{ url_for('inventaire', filtre_localisation='J0-09') }}" class="stretched-link"></a>
-                </div>
+            <div class="glass-card mb-3 p-3 position-relative text-center">
+                <h5 class="text-white">Salle H1-11</h5>
+                <p class="mb-0 mt-2">
+                    <span class="badge badge-custom badge-loc">{{ nbr_en_H1_11 }} équipements</span>
+                </p>
+                <a href="{{ url_for('inventaire', filtre_localisation='H1-11') }}" class="stretched-link"></a>
             </div>
         </div>
     </div>
-    <div class="row mt-5 justify-content-center">
+
+    <!-- Bâtiment I -->
+    <div class="col-md-4">
+        <div class="glass-card h-100">
+            <h3 class="text-success text-center mb-4" style="font-weight: 600;">🏫 Bâtiment I</h3>
+            
+            <div class="glass-card mb-3 p-3 position-relative text-center">
+                <h5 class="text-white">Salle I0-02</h5>
+                <p class="mb-0 mt-2">
+                    <span class="badge badge-custom badge-loc">{{ nbr_en_I0_02 }} équipements</span>
+                </p>
+                <a href="{{ url_for('inventaire', filtre_localisation='I0-02') }}" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bâtiment J -->
+    <div class="col-md-4">
+        <div class="glass-card h-100">
+            <h3 class="text-warning text-center mb-4" style="font-weight: 600;">🏫 Bâtiment J</h3>
+            
+            <div class="glass-card mb-3 p-3 position-relative text-center">
+                <h5 class="text-white">Salle J0-01</h5>
+                <p class="mb-0 mt-2">
+                    <span class="badge badge-custom badge-loc">{{ nbr_en_J0_01 }} équipements</span>
+                </p>
+                <a href="{{ url_for('inventaire', filtre_localisation='J0-01') }}" class="stretched-link"></a>
+            </div>
+
+            <div class="glass-card mb-3 p-3 position-relative text-center">
+                <h5 class="text-white">Salle J0-04</h5>
+                <p class="mb-0 mt-2">
+                    <span class="badge badge-custom badge-loc">{{ nbr_en_J0_04 }} équipements</span>
+                </p>
+                <a href="{{ url_for('inventaire', filtre_localisation='J0-04') }}" class="stretched-link"></a>
+            </div>
+
+            <div class="glass-card mb-3 p-3 position-relative text-center">
+                <h5 class="text-white">Salle J0-09</h5>
+                <p class="mb-0 mt-2">
+                    <span class="badge badge-custom badge-loc">{{ nbr_en_J0_09 }} équipements</span>
+                </p>
+                <a href="{{ url_for('inventaire', filtre_localisation='J0-09') }}" class="stretched-link"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 justify-content-center">
     <div class="col-md-6 text-center">
-        <div class="card bg-light border-secondary">
-            <div class="card-body">
-                <h4 class="card-title">📦 Réserve</h4>
-                <a href="{{ url_for('inventaire', filtre_localisation='Réserve') }}" class="btn btn-outline-secondary">
-                    Voir le matériel stocké ({{ nbr_en_Reserve }})
-                </a>
-            </div>
+        <div class="glass-card" style="border: 1px solid rgba(255,255,255,0.15);">
+            <h4 class="text-white mb-3">📦 Réserve de Matériel</h4>
+            <p class="text-white mt-1 font-weight-bold">Équipements en cours de stockage ou de maintenance</p>
+            <a href="{{ url_for('inventaire', filtre_localisation='Réserve') }}" class="btn btn-premium px-4 mt-2">
+                Consulter la Réserve ({{ nbr_en_Reserve }})
+            </a>
         </div>
     </div>
 </div>
+
+<div class="d-flex gap-2 justify-content-center mt-4">
+    <a href="{{ url_for('accueil') }}" class="btn btn-premium-secondary px-4">
+        🏠 Retourner à l'accueil
+    </a>
+    <a href="{{ url_for('inventaire') }}" class="btn btn-premium px-4">
+        📂 Voir l'inventaire
+    </a>
 </div>
-<a href="{{ url_for('inventaire') }}"><button type="button" class="btn btn-secondary">Voir l'inventaire</button></a>
-<a href="{{ url_for('accueil') }}"><button type="button" class="btn btn-secondary">Aller à l'accueil</button></a>
 {% endblock %}
