@@ -22,7 +22,19 @@ class Base(DeclarativeBase):
 
 db = SQLAlchemy(model_class=Base)
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+# --- PARTE MODIFIÉE POUR LE DÉPLOIEMENT ---
+# Récupère l'URL de la base depuis l'environnement, sinon bascule sur SQLite
+database_url = (
+    os.environ.get("DATABASE_URL")
+    or os.environ.get("SQLALCHEMY_DATABASE_URI")
+    or "sqlite:///mabase.db"
+)
+
+# Correction pour SQLAlchemy si l'hébergeur fournit une URL en postgres://
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 db.init_app(app)
 app.secret_key = "wanny123"
 
